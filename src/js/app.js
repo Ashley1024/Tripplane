@@ -48,6 +48,18 @@ destresultEle.addEventListener('click',function(e){
   };
 })
 
+planbtnEle.onclick=function(){
+  console.log(originGeo);
+  console.log(destGeo);
+  // exclude the condion nothing input and same address
+  if(originGeo.latitude!==destGeo.latitude&&originGeo.longtitude!==destGeo.longtitude){
+    plantrip(originGeo,destGeo);
+    
+  }
+  
+};
+
+
 
 
 
