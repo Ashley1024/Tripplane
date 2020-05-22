@@ -59,7 +59,24 @@ planbtnEle.onclick=function(){
   
 };
 
+function plantrip(origin,destination){
+  fetch(`https://api.winnipegtransit.com/v3/trip-planner.json?origin=geo/${origin.latitude},${origin.longtitude}&api-key=${winnipegApi}&destination=geo/${destination.latitude},${destination.longtitude}`)
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error("Houston,  we have a problem.");
+      }
+    })
+    .then(json => {
 
+    
+     console.log(json.plans[0]);
+     //duration=ele.times.durations
+     
+    })
+
+}
 
 
 
