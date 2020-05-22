@@ -11,6 +11,44 @@ const mapboxToken='pk.eyJ1IjoiYXNobGV5a2VlIiwiYSI6ImNrYTV5bnU1bDAyNHYyeW9meWplZG
 const winnipegApi='Ih1V6TNl5DTR9QitZx';
 
 
+let originGeo={};
+let destGeo={};
+
+
+originresuleEle.addEventListener('click',function(e){
+  let so=document.querySelectorAll('.origins .selected');
+
+  so.forEach(element => {
+    element.className=false;
+  });
+
+  if(e.target.closest('li').className === 'false'){
+ 
+    e.target.closest('li').className = 'selected';
+    originGeo.latitude=e.target.closest('li').getAttribute('data-lat');
+    originGeo.longtitude=e.target.closest('li').getAttribute('data-long');
+    // console.log(originGeo);
+    
+  };
+})
+
+destresultEle.addEventListener('click',function(e){
+  let sd=document.querySelectorAll('.destinations .selected');
+
+  sd.forEach(element => {
+    element.className=false;
+  });
+
+  if(e.target.closest('li').className === 'false'){
+   
+    e.target.closest('li').className = 'selected';
+    destGeo.latitude=e.target.closest('li').getAttribute('data-lat');
+    destGeo.longtitude=e.target.closest('li').getAttribute('data-long');
+    // console.log(destGeo);
+  };
+})
+
+
 
 
 function searchOrign(query){  
@@ -50,6 +88,38 @@ function searchDest(query){
     })
 };
 
+
+function insertaddress(type,arr){
+ 
+  if(type==='origin'){
+    originresuleEle.innerHTML='';
+  }
+  if(type==='destination'){
+    destresultEle.innerHTML='';
+  }
+
+  let html='';
+  arr.forEach(element => {
+    const addressarr=element.place_name.split(',');
+   
+  
+    html+=`
+        <li data-long="${element.geometry.coordinates[0]}" data-lat="${element.geometry.coordinates[1]}" class="false">
+          <div class="name">${addressarr[0]}</div>
+          <div>${addressarr[1]}</div>
+        </li>
+    `
+    
+  });
+  if(type==='origin'){
+    originresuleEle.innerHTML=html;
+  }
+  if(type==='destination'){
+    destresultEle.innerHTML=html;
+  }
+  
+  
+}
 
 
 
