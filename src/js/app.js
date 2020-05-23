@@ -11,6 +11,7 @@ const mapboxToken='pk.eyJ1IjoiYXNobGV5a2VlIiwiYSI6ImNrYTV5bnU1bDAyNHYyeW9meWplZG
 const winnipegApi='Ih1V6TNl5DTR9QitZx';
 
 
+
 let originGeo={};
 let destGeo={};
 
@@ -71,12 +72,50 @@ function plantrip(origin,destination){
     .then(json => {
 
     
-     console.log(json.plans[0]);
-     //duration=ele.times.durations
      
+     
+     plantripWrite(json.plans[0].segments);
     })
 
-}
+};
+
+function plantripWrite(data){
+  let img='';
+  innerText='';
+  data.forEach(element => {
+    console.log(element);
+    
+    if(element.type==='walk'){
+      img="fas fa-walking";
+
+      if(element.to.stop===undefined){
+        innerText=`Walk for ${element.times.durations.total} minutes to destination`
+      }else{
+     
+      innerText=`Walk for${element.times.durations.total} minutes to stop #${element.to.stop.key}-  ${element.to.stop.name} `}
+      console.log(innerText);
+      
+    };
+
+    if(element.type==='ride'){
+      img="fas fa-bus";
+      innerText=`Ride the ${element.route.name} for ${element.times.durations.total}  `
+      console.log(innerText);
+      
+    };
+
+    if(element.type==='transfer'){
+      img="fas fa-ticket-alt";
+      innerText=`Transfer from stop #${element.from.stop.key}- ${element.from.stop.name}$ to #${element.to.stop.key}-${element.to.stop.name}`
+    };
+    
+
+
+
+
+
+  });
+};
 
 
 
