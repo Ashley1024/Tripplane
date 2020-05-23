@@ -71,9 +71,6 @@ function plantrip(origin,destination){
     })
     .then(json => {
 
-    
-     
-     
      plantripWrite(json.plans[0].segments);
     })
 
@@ -81,40 +78,50 @@ function plantrip(origin,destination){
 
 function plantripWrite(data){
   let img='';
-  innerText='';
+  let innerText='';
+  let html='';
   data.forEach(element => {
     console.log(element);
     
     if(element.type==='walk'){
       img="fas fa-walking";
 
-      if(element.to.stop===undefined){
-        innerText=`Walk for ${element.times.durations.total} minutes to destination`
+      if(element.to.destination){
+        innerText=`Walk for ${element.times.durations.total} minutes to destination`;
+        
+    
       }else{
      
-      innerText=`Walk for${element.times.durations.total} minutes to stop #${element.to.stop.key}-  ${element.to.stop.name} `}
+      innerText=`Walk for ${element.times.durations.total} minutes to stop #${element.to.stop.key}-  ${element.to.stop.name} `};
+
       console.log(innerText);
+      html+=`<li><i class='${img}' aria-hidden="true"></i>${innerText}</li>`;
+
+     
       
     };
 
     if(element.type==='ride'){
       img="fas fa-bus";
-      innerText=`Ride the ${element.route.name} for ${element.times.durations.total}  `
+      innerText=`Ride the ${element.route.name} for ${element.times.durations.total}`;
+      html+=`<li><i class='${img}' aria-hidden="true"></i>${innerText}</li>`;
       console.log(innerText);
       
     };
 
     if(element.type==='transfer'){
       img="fas fa-ticket-alt";
-      innerText=`Transfer from stop #${element.from.stop.key}- ${element.from.stop.name}$ to #${element.to.stop.key}-${element.to.stop.name}`
+      innerText=`Transfer from stop #${element.from.stop.key}- ${element.from.stop.name}$ to #${element.to.stop.key}-${element.to.stop.name}`;
+      html+=`<li><i class='${img}' aria-hidden="true"></i>${innerText}</li>`;
+
     };
+   
     
 
 
 
-
-
   });
+  mytripEle.innerHTML=html;
 };
 
 
